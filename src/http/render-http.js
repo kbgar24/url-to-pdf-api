@@ -1,6 +1,8 @@
 const _ = require('lodash');
 const ex = require('../util/express');
 const renderCore = require('../core/render-core');
+const logger = require('../util/logger')(__filename);
+const fs = require('fs');
 
 function getMimeType(opts) {
   if (opts.output === 'pdf') {
@@ -33,6 +35,8 @@ const postRender = ex.createRoute((req, res) => {
   const isBodyJson = req.headers['content-type'].includes('application/json');
   if (isBodyJson) {
     const hasContent = _.isString(_.get(req.body, 'url')) || _.isString(_.get(req.body, 'html'));
+
+
     if (!hasContent) {
       ex.throwStatus(400, 'Body must contain url or html');
     }
@@ -55,10 +59,10 @@ const postRender = ex.createRoute((req, res) => {
 
   return renderCore.render(opts)
     .then((data) => {
-      if (opts.attachmentName) {
-        res.attachment(opts.attachmentName);
-      }
-      res.set('content-type', getMimeType(opts));
+
+      res.set('Content-Type', 'application/pdf');
+      res.set("Access-Control-Expose-Headers", "Content-Disposition")
+
       res.send(data);
     });
 });
