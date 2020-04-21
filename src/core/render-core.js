@@ -8,7 +8,6 @@ async function createBrowser(opts) {
   const browserOpts = {
     ignoreHTTPSErrors: opts.ignoreHttpsErrors,
     sloMo: config.DEBUG_MODE ? 250 : undefined,
-    args: ["--font-render-hinting=nonde"]
   };
   if (config.BROWSER_WS_ENDPOINT) {
     browserOpts.browserWSEndpoint = config.BROWSER_WS_ENDPOINT;
@@ -18,7 +17,7 @@ async function createBrowser(opts) {
     browserOpts.executablePath = config.BROWSER_EXECUTABLE_PATH;
   }
   browserOpts.headless = !config.DEBUG_MODE;
-  browserOpts.args = ['--disable-gpu', '--no-sandbox', '--disable-setuid-sandbox'];
+  browserOpts.args = ['--disable-gpu', '--no-sandbox', '--disable-setuid-sandbox', "--font-render-hinting=nonde"];
   return puppeteer.launch(browserOpts);
 }
 
