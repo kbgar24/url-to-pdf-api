@@ -2,7 +2,8 @@
 
 // Env vars should be casted to correct types
 const config = {
-  PORT: Number(process.env.PORT) || 9000,
+  // PORT: Number(process.env.PORT) || 9000,
+  PORT: 9009,
   // NODE_ENV: "process.env.NODE_ENV",
   NODE_ENV: "production",
   LOG_LEVEL: process.env.LOG_LEVEL,
